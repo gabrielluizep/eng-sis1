@@ -372,7 +372,7 @@ $
 = 2 ;quad (dif y_0(0))/(dif t) = 10
 $
 
-=== Resposta (ERRADO)
+=== Resposta
 
 Para facil leitura e manipulação podemos reescrever o sistema utilizando a
 notação do operador $D$:
