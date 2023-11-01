@@ -161,6 +161,7 @@ e invariante, e as entradas são?
 
 #image("./assets/p2q3-2.png", width: 80%)
 
+== Resposta
 Para definirmos a resposta em estado nulo do sistema calculamos a seguinte
 convolução:
 
