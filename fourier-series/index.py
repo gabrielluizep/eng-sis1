@@ -1,13 +1,13 @@
 import pandas as pd
 import streamlit as st
-from numpy import pi, e, linspace
+from numpy import pi, e, linspace, cos
 
 st.title("Fourier Series")
 
 t = linspace(0, 10, 1000)
-y = 0
 
-st.latex("y(t) = \sum_{k=1}^{\infty} \\frac{(-1)^k}{k} e^{jk\pi t}")
+# a
+st.latex("y(t) = 2\sum_{k=1}^{\infty} \\frac{(-1)^k}{k} e^{jk\pi t}")
 
 with st.expander(label="Demonstration"):
     st.markdown("Calculating the integral of $te^{at}$")
@@ -107,12 +107,60 @@ with st.expander(label="Demonstration"):
         """
     )
 
+y_a = 0
+sum_a = st.slider("Sum A", 1, 100, 30)
 
-sum = st.slider("Sum", 1, 100, 1)
+for k in range(1, sum_a + 1):
+    y_a = y_a + 1j * (-1) ** k / k * e ** (1j * k * pi * t)
 
-for k in range(1, sum + 1):
-    y = y + 1j * (-1) ** k / k * e ** (1j * k * pi * t)
+df_a = pd.DataFrame(y_a.real, index=t, columns=["y"])
 
-df = pd.DataFrame(y.real, index=t, columns=["y"])
+st.line_chart(df_a, x=None, y="y")
 
-st.line_chart(df, x=None, y="y")
+# d
+st.latex(r"y(t) = 1 + 2 \sum_{k=1}^{\infty} \left[\frac{1}{2} (1+(-1)^k)\right] e^{j k \pi t}") 
+
+y_d = 0
+sum_d = st.slider("Sum D", 1, 100, 30)
+
+for k in range(1, sum_d +1):
+    y_d = y_d + (1/2 * (1+(-1)**k)* e ** (1j * k * pi * t))
+
+y_d = y_d*2
+y_d = 1 + y_d
+
+df_d = pd.DataFrame(y_d.real, index=t, columns=["y"])
+
+st.line_chart(df_d, x=None, y="y")
+
+# e 
+st.latex(r"1 + 2 \sum_{k=1}^{\infty} \frac{1}{j k} \left[cos(2k\pi/3) * cos(k\pi/3) \right] e^{j k t \pi/3}")
+
+y_e = 0
+sum_e = st.slider("Sum E", 1, 100, 30)
+
+for k in range(1, sum_e + 1):
+    y_e = y_e + (1 / (1j * k) * (cos(2 * k * pi / 3) - cos(k * pi / 3))) * e ** (1j * k * pi * t)
+
+y_e = y_e * 2
+y_e = 1 + y_e
+
+df_e = pd.DataFrame(y_e.real, index=t, columns=["y"])
+
+st.line_chart(df_e, x=None, y="y")
+
+#f
+st.latex(r"4/3 + 2 \sum_{k=1}^{\infty} \left(\frac{1}{1 j 2 pi} * \left[2  - e^{-jk4\pi/3} - e^{-jk2\pi/3} \right] \right) e^{j k 2\pi/3}")
+
+y_f = 0
+sum_f = st.slider("Sum F", 1, 100, 30)
+
+for k in range(1, sum_f + 1):
+    y_f = y_f + (1 / (1j * k * 2 * pi) * (2 - e ** (-1j * k * 4 * pi / 3) - e ** (-1j * k * 2 * pi / 3))) * e ** (1j * k * 2 * pi * t / 3)
+
+y_f = y_f * 2
+y_f = 4 / 3 + y_f
+
+df_f = pd.DataFrame(y_f.real, index=t, columns=["y"])
+
+st.line_chart(df_f, x=None, y="y")
