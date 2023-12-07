@@ -1,5 +1,4 @@
 import pandas as pd
-from pyparsing import col
 import streamlit as st
 import plotly.express as px
 from numpy import pi, e, linspace, cos
@@ -314,7 +313,6 @@ with st.expander(label="Demonstration"):
         """
     )
 
-# =============================================================================
 y_f = 0
 f = dict(
     {
