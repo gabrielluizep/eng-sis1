@@ -38,7 +38,7 @@ t = linspace(-5, 5, 1000)
 
 # =============================================================================
 st.subheader("a)")
-st.latex(r"y(t) = 0 + 2\sum_{k=1}^{\infty} \frac{(-1)^k}{k} e^{jk\pi t}")
+st.latex(r"y(t) = 0 + \sum_{k=1}^{\infty} \frac{j (-1)^{k}}{k \pi} e^{jk\pi t} \\")
 
 with st.expander(label="Demonstration"):
     st.markdown("Calculating the integral of $te^{at}$")
@@ -62,7 +62,6 @@ with st.expander(label="Demonstration"):
 
         """
     )
-    # \xRightarrow{a=-jk\pi}
 
     st.latex(
         r"""
@@ -131,9 +130,11 @@ with st.expander(label="Demonstration"):
         
         \\
 
-        y(t) &= \frac{1}{T} \sum_{k=-\infty}^{\infty} a_k e^{jk\frac{2\pi}{T}t} \\
-        &= \frac{1}{2} \sum_{k=-\infty}^{\infty} \frac{j (-1)^{k}}{k \pi} e^{jk\frac{2\pi}{2}t} \\
+        y(t) &= a_0 + \frac{1}{T} \sum_{k=-\infty}^{\infty} a_k e^{jk\frac{2\pi}{T}t} \\
+        &= 0 + \frac{1}{2} \sum_{k=-\infty}^{\infty} \frac{j (-1)^{k}}{k \pi} e^{jk\frac{2\pi}{2}t} \\
         &= \frac{1}{2} \sum_{k=-\infty}^{\infty} \frac{j (-1)^{k}}{k \pi} e^{jk\pi t} \\
+        &\equiv 2 \cdot \frac{1}{2} \sum_{k=1}^{\infty} \frac{j (-1)^{k}}{k \pi} e^{jk\pi t} \\
+        &= \sum_{k=1}^{\infty} \frac{j (-1)^{k}}{k \pi} e^{jk\pi t} \\
         \end{align*}
         """
     )
@@ -158,7 +159,7 @@ st.plotly_chart(fig_a)
 # =============================================================================
 st.subheader("d)")
 st.latex(
-    r"y(t) = -\frac{1}{2} + 2 \sum_{k=1}^{\infty} \left[\frac{1}{2} - (-1)^k\right] e^{j k \pi t}"
+    r"y(t) = -\frac{1}{2} + 2 \sum_{k=1}^{\infty} \left[\frac{1}{2} - (-1)^k\right] e^{jk\pi t}"
 )
 
 with st.expander(label="Demonstration"):
@@ -169,11 +170,7 @@ with st.expander(label="Demonstration"):
         
         \\
         
-        a_0 &= \frac{1}{T} \int_{0}^{T} x(t) dt \\
-        &= \frac{1}{2} \int_{0}^{2} \delta(t) - 2 \delta(t-1) dt \\
-        &= \frac{1}{2} \left[\int_{0}^{2} \delta(t) dt - 2 \int_{0}^{2} \delta(t-1) dt\right] \\
-        &= \frac{1}{2} \left[1 - 2 \right] \\
-        &= \frac{1}{2} \cdot (-1) \\
+        a_0 &= \frac{1}{T} \int_{0}^{T} x(t) dt \\cdot
         &= -\frac{1}{2} \\
         
         \\
@@ -191,6 +188,8 @@ with st.expander(label="Demonstration"):
 
         y(t) &= a_0 + \frac{1}{T} \sum_{k=-\infty}^{\infty} a_k e^{jk\omega_0 t} \\
         &= -\frac{1}{2} + \frac{1}{2} \sum_{k=-\infty}^{\infty} \left[\frac{1}{2} - (-1)^k\right] e^{jk\pi t} \\
+        &\equiv -\frac{1}{2} + 2 \cdot \frac{1}{2} \sum_{k=1}^{\infty} \left[\frac{1}{2} - (-1)^k\right] e^{jk\pi t}\\
+        &= -\frac{1}{2} + 2 \sum_{k=1}^{\infty} \left[\frac{1}{2} - (-1)^k\right] e^{jk\pi t}
         \end{align*}
         """
     )
@@ -208,7 +207,7 @@ st.line_chart(df_d, x=None, y="y")
 # =============================================================================
 st.subheader("e)")
 st.latex(
-    r"y(t) = 0 + 2 \sum_{k=1}^{\infty} \frac{1}{j k} \left[cos(2k\pi/3) * cos(k\pi/3) \right] e^{j k t \pi/3}"
+    r"y(t) = 0 + \frac{1}{3} \sum_{k=1}^{\infty} \frac{1}{jk\pi} \left[ \cos(2k\pi/3) - \cos(k\pi/3)\right] e^{jk\pi t/3} \\"
 )
 
 with st.expander(label="Demonstration"):
@@ -255,7 +254,14 @@ with st.expander(label="Demonstration"):
         &= \frac{1}{6} \frac{1}{jk\pi/3} \left[ 2\cos(2k\pi/3) - 2\cos(k\pi/3)\right]\\
         &= \frac{1}{3} \frac{1}{jk\pi/3} \left[ \cos(2k\pi/3) - \cos(k\pi/3)\right]\\
         &= \frac{1}{jk\pi} \left[ \cos(2k\pi/3) - \cos(k\pi/3)\right]\\
+        
+        \\
 
+        y(t) &= a_0 + \frac{1}{T} \sum_{k=-\infty}^{\infty} a_k e^{jk\omega_0 t} \\
+        &= 0 + \frac{1}{6} \sum_{k=-\infty}^{\infty} \frac{1}{jk\pi} \left[ \cos(2k\pi/3) - \cos(k\pi/3)\right] e^{jk\pi t/3} \\
+        &= \frac{1}{6} \sum_{k=-\infty}^{\infty} \frac{1}{jk\pi} \left[ \cos(2k\pi/3) - \cos(k\pi/3)\right] e^{jk\pi t/3} \\
+        &\equiv 2 \cdot \frac{1}{6} \sum_{k=1}^{\infty} \frac{1}{jk\pi} \left[ \cos(2k\pi/3) - \cos(k\pi/3)\right] e^{jk\pi t/3} \\
+        &= \frac{1}{3} \sum_{k=1}^{\infty} \frac{1}{jk\pi} \left[ \cos(2k\pi/3) - \cos(k\pi/3)\right] e^{jk\pi t/3} \\
         \end{align*}
         """
     )
@@ -279,7 +285,7 @@ st.line_chart(df_e, x=None, y="y")
 # =============================================================================
 st.subheader("f)")
 st.latex(
-    r"y(t) = 1 + 2 \sum_{k=1}^{\infty} \frac{1}{3jk\pi} \left[2 - e^{-2jk\pi/3} - e^{-4jk\pi/3}\right] e^{j k t \pi/3}"
+    r"y(t) = 1 + \frac{2}{3} \sum_{k=1}^{\infty} \frac{1}{jk\pi} \left[ 2 - e^{-2jk\pi/3} - e^{-4jk\pi/3} \right] e^{jk\pi t/3} \\"
 )
 
 with st.expander(label="Demonstration"):
@@ -309,6 +315,12 @@ with st.expander(label="Demonstration"):
         &= \frac{1}{3} \cdot \frac{1}{-jk\pi/3} \left[ e^{-2jk\pi/3} - 2 + e^{-4jk\pi/3} \right]\\
         &= \frac{1}{3} \cdot \frac{1}{jk\pi} \left[ 2 - e^{-2jk\pi/3} - e^{-4jk\pi/3} \right]\\
 
+        \\
+
+        y(t) &= a_0 + \frac{1}{T} \sum_{k=-\infty}^{\infty} a_k e^{jk\omega_0 t} \\
+        &= 1 + \frac{1}{3} \sum_{k=-\infty}^{\infty} \frac{1}{jk\pi} \left[ 2 - e^{-2jk\pi/3} - e^{-4jk\pi/3} \right] e^{jk\pi t/3} \\
+        &\equiv 1 + 2 \cdot \frac{1}{3} \sum_{k=1}^{\infty} \frac{1}{jk\pi} \left[ 2 - e^{-2jk\pi/3} - e^{-4jk\pi/3} \right] e^{jk\pi t/3} \\
+        &= 1 + \frac{2}{3} \sum_{k=1}^{\infty} \frac{1}{jk\pi} \left[ 2 - e^{-2jk\pi/3} - e^{-4jk\pi/3} \right] e^{jk\pi t/3} \\
         \end{align*}
         """
     )
@@ -327,7 +339,7 @@ f = dict(
 for k in range(1, 1000):
     f["y"] = f["y"] + f["a_k"](k) * (e ** (2 * k * f["w_0"] * 1j * t))
 
-f["y"] = 2 * f["y"] + 1
+f["y"] = 2/3 * f["y"] + 1
 df_f = pd.DataFrame(f["y"].real, index=t, columns=["y"])
 
 st.line_chart(df_f, x=None, y="y")
